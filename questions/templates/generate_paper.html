@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Generate Question Paper{% endblock %}
+
+{% block content %}
+<h2>Generate Question Paper</h2>
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Generate</button>
+</form>
+
+{% if questions_mcq or questions_written %}
+    <hr>
+    <h4>📝 Generated Question Paper</h4>
+
+    {% if questions_mcq %}
+        <h5>Multiple Choice Questions</h5>
+        <ol>
+        {% for q in questions_mcq %}
+            <li>{{ q.text }}
+                <ul>
+                    {% for key, value in q.options.items %}
+                        <li>{{ key|upper }}. {{ value }}</li>
+                    {% endfor %}
+                </ul>
+                <strong>Marks:</strong> {{ q.marks }}
+            </li>
+        {% endfor %}
+        </ol>
+    {% endif %}
+
+    {% if questions_written %}
+        <h5>Written Questions</h5>
+        <ol>
+        {% for q in questions_written %}
+            <li>{{ q.text }} <strong>({{ q.marks }} marks)</strong></li>
+        {% endfor %}
+        </ol>
+    {% endif %}
+{% endif %}
+{% endblock %}
