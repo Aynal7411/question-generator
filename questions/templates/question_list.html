@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Question List{% endblock %}
+
+{% block content %}
+<h2>Question List</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Chapter</th>
+            <th>Type</th>
+            <th>Text</th>
+            <th>Marks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.chapter.name }}</td>
+            <td>{{ question.get_question_type_display }}</td>
+            <td>{{ question.text|truncatechars:80 }}</td>
+            <td>{{ question.marks }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
