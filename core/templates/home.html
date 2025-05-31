@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,11 +56,31 @@
         button a:active {
             color: lab(87.82% -85.13 77.76);
         }
-        
+        div {
+            margin-bottom: 0px;
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            color: hsl(213, 17%, 20%);
+            padding: 10px;
+            background-color: hsl(213, 17%, 90%);
+            border-radius: 10px;
+            position: relative;
+        }
+        div a {
+            text-decoration: none;
+            color: hsl(213, 17%, 20%);
+            font-weight: bold;
+            transition: color 0.3s ease;
+            
+        }
         </style>
 </head>
 <body>
-    
+    <div><a href="{% static 'pdf/QuestionBank.pdf' %}" download class="btn btn-primary">
+  📄 Download Question Bank PDF
+</a></div>
    <button><a href="{% url 'question_list' %}" class="btn btn-primary">View Questions</a></button>
+   {% include "footer.html" %}
 </body>
 </html>
