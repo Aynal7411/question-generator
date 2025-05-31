@@ -11,10 +11,20 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY', 'unsafe-secret')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -74,22 +84,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ai_question_generator.wsgi.application'
 
+from decouple import config
 import dj_database_url
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+SECRET_KEY = config('SECRET_KEY', default='unsafe-secret')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'questiondb_3yd3',       # আপনার ডেটাবেইজের নাম
-        'USER': 'questiondb_3yd3_user',                 # PostgreSQL ইউজার
-        'PASSWORD': 'rBzl0Ce1ZXXTkIXFMrZXlPW6IlXLQF1d',   # সঠিক পাসওয়ার্ড দিন
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
